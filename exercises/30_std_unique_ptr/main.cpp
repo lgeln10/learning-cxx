@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-// READ: `std::unique_ptr` <https://zh.cppreference.com/w/cpp/memory/unique_ptr>
-
 std::vector<std::string> RECORDS;
 
 class Resource {
@@ -15,6 +13,7 @@ public:
     void record(char record) {
         _records.push_back(record);
     }
+
 
     ~Resource() {
         RECORDS.push_back(_records);
@@ -47,16 +46,15 @@ int main(int argc, char **argv) {
     drop(drop(reset(drop(reset(reset(nullptr))))));
     problems[2] = std::move(RECORDS);
 
-    // ---- 修正后的 answers 数组 ----
     std::vector<const char *> answers[]{
         {"fd"},
-        {"ffr", "d"},
-        {"r", "rr", "d", "d"},
+        {"d", "ffr"},
+        {"d", "d", "r"},
     };
 
     for (auto i = 0; i < 3; ++i) {
         ASSERT(problems[i].size() == answers[i].size(), "wrong size");
-        for (auto j = 0; j < problems[i].size(); ++j) {
+        for (std::size_t j = 0; j < problems[i].size(); ++j) {
             ASSERT(std::strcmp(problems[i][j].c_str(), answers[i][j]) == 0, "wrong location");
         }
     }
