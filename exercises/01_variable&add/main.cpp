@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv) {
     // TODO: 补全变量定义并打印加法运算
-    // x ?
+    int x = 1;  // 可以是任意整数，这里选择 1 使输出简洁
     std::cout << x << " + " << x << " = " << x + x << std::endl;
     return 0;
 }
