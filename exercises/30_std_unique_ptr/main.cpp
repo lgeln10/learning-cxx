@@ -46,11 +46,21 @@ int main(int argc, char **argv) {
     drop(drop(reset(drop(reset(reset(nullptr))))));
     problems[2] = std::move(RECORDS);
 
+#ifdef _MSC_VER
+    // MSVC destroys the by-value unique_ptr parameters in a different valid
+    // order from libstdc++, so the resource records appear in this order.
+    std::vector<const char *> answers[]{
+        {"fd"},
+        {"ffr", "d"},
+        {"r", "d", "d"},
+    };
+#else
     std::vector<const char *> answers[]{
         {"fd"},
         {"d", "ffr"},
         {"d", "d", "r"},
     };
+#endif
 
     for (auto i = 0; i < 3; ++i) {
         ASSERT(problems[i].size() == answers[i].size(), "wrong size");
